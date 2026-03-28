@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lomsh"
+version = "0.1.0"
+description = "A smart shell with an embedded AI assistant"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "TonyCronin" }]
+dependencies = ["openai>=1.0.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+lomsh = "lomsh.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/TonyCronin/lomsh"
+Issues   = "https://github.com/TonyCronin/lomsh/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lomsh*"]

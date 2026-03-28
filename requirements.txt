@@ -1,0 +1,2 @@
+openai>=1.0.0
+# readline is stdlib on macOS/Linux — no install needed
