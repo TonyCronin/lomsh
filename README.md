@@ -20,6 +20,7 @@ Looks like the package isn't installed in editable mode...
 **With uv (recommended):**
 ```bash
 uv tool install git+https://github.com/TonyCronin/lomsh.git
+uv tool update-shell   # adds lomsh to your PATH — only needed once
 ```
 
 **With pipx:**
