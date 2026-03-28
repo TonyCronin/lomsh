@@ -7,7 +7,12 @@
 
 // ── background & base ────────────────────────────────────────────────────────
 
-body { background-color: #023047; color: #e0fbfc; }
+body {
+  background-color: #023047;
+  color: #e0fbfc;
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-weight: 300;
+}
 
 .site-nav, .side-bar { background-color: #012030; }
 
@@ -18,6 +23,7 @@ body { background-color: #023047; color: #e0fbfc; }
 h1, h2, h3, h4 {
   color: #8ecae6;
   font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-weight: 500;
 }
 
 a { color: #fb8500; }
