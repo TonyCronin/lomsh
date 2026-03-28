@@ -2,13 +2,13 @@
 
 A shell harness built specifically for local models.
 
-Cloud-first agent tools (OpenCode, Goose — great products) assume a fast, reliable API. Local models are different. They're slower, occasionally flaky, and don't need an autonomous loop running on top of them. lomsh is built for that reality.
+Running a local model is a different experience — slower responses, occasional hiccups, no cloud fallback. lomsh is designed around that reality from the ground up.
 
-**What makes it stable for local models:**
+**Built for local:**
 - Single-shot calls only — one request, one response, done. No looping, no sub-agents, nothing running in the background
 - No timeouts — local models can be slow; lomsh waits
 - Full output — responses up to 40k tokens by default, configurable up to your model's full context window
-- No cloud dependency — works entirely offline once your model is running
+- Works entirely offline once your model is running
 
 You stay in a real shell running real commands. The model is one keystroke away when you need it.
 
