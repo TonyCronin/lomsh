@@ -192,8 +192,8 @@ def call_agent(user_msg: str, session: Session) -> str:
     session_total = session.total_in + session.total_out
     stats = (
         f"  {session_total:,}  "
-        f"↑ {usage_in:,} in  "
-        f"↓ {usage_out:,} out  "
+        f"↓ {usage_in:,} in  "
+        f"↑ {usage_out:,} out  "
         f"All time: {alltime_total:,}"
     )
     print(agent_style("─" * 60))
