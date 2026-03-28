@@ -131,6 +131,13 @@ def call_agent(user_msg: str, session: Session) -> str:
             sys.stdout.write(agent_style(text))
             sys.stdout.flush()
 
+    except KeyboardInterrupt:
+        if first_token:
+            spinner.stop()
+        print()
+        print(agent_style("─" * 60))
+        print(dim("  (interrupted)"))
+
     except Exception as e:
         spinner.stop()
         print(error_style(f"\n[lomsh] model error: {e}"))
