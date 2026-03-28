@@ -2,7 +2,7 @@
 
 A shell harness built specifically for local models.
 
-Running a local model is a different experience — slower responses, occasional hiccups, no cloud fallback. lomsh is designed around that reality from the ground up.
+Running a local model is a different experience — slower responses, occasional hiccups, no cloud fallback. lomsh is designed around that reality from the ground up. If you're looking for a full agentic coding assistant, check out [OpenCode](https://github.com/sst/opencode) or [Goose](https://github.com/block/goose) — great tools for that job.
 
 **Built for local:**
 - Single-shot calls only — one request, one response, done. No looping, no sub-agents, nothing running in the background
