@@ -88,6 +88,7 @@ lomsh works with Ollama, LM Studio, vLLM, or a LiteLLM proxy. Step-by-step setup
 | `LOMSH_MODEL` | `Qwen Coder` | Model name |
 | `LOMSH_API_KEY` | `sk-sovereign-local` | API key (ignored by most local servers) |
 | `LOMSH_MAX_CTX` | `100000` | Max tokens sent as context |
+| `LOMSH_MAX_RESPONSE` | `40000` | Max tokens in model response |
 
 ## Colours
 

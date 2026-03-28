@@ -14,10 +14,11 @@ from .shell   import Session, run_command
 from .stats   import load_alltime, save_alltime
 from .agent   import call_agent
 from . import agent as _agent_module
-from .config  import BASE_URL, MODEL, API_KEY
+from .config  import BASE_URL, MODEL, API_KEY, MAX_RESPONSE
 
 # Wire config into agent module at startup
-_agent_module.BASE_URL = BASE_URL
+_agent_module.BASE_URL     = BASE_URL
+_agent_module.MAX_RESPONSE = MAX_RESPONSE
 _agent_module.MODEL    = MODEL
 _agent_module.API_KEY  = API_KEY
 

@@ -10,9 +10,10 @@ from openai import OpenAI
 from .colours import agent_style, error_style, stats_style, dim
 from .shell import Session
 
-BASE_URL = None   # set from config at runtime
-MODEL    = None
-API_KEY  = None
+BASE_URL     = None   # set from config at runtime
+MODEL        = None
+API_KEY      = None
+MAX_RESPONSE = 40_000
 
 BRAILLE = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 
@@ -104,7 +105,7 @@ def call_agent(user_msg: str, session: Session) -> str:
             messages=messages,
             stream=True,
             stream_options={"include_usage": True},
-            max_tokens=4096,
+            max_tokens=MAX_RESPONSE,
         )
 
         usage_in = usage_out = 0
