@@ -80,6 +80,10 @@ The assistant sees your full session â€” every command you ran and its output â€
 
 lomsh works with Ollama, LM Studio, vLLM, or a LiteLLM proxy. Step-by-step setup for each: [docs/models.md](docs/models.md)
 
+## Context window
+
+lomsh sends your full session as context on every call. How to configure it for your model: [docs/context-window.md](docs/context-window.md)
+
 ## Configuration reference
 
 | Variable | Default | Description |
