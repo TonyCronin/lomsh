@@ -1,8 +1,16 @@
 # lomsh — Local Model Shell
 
-A simple shell harness for local models. Not a replacement for OpenCode or Goose — those are great tools. This is something smaller: a real bash REPL where a locally-hosted model is one keystroke away.
+A shell harness built specifically for local models.
 
-Point it at any OpenAI-compatible endpoint — vLLM, LiteLLM, Ollama, a LiteLLM proxy in front of a DGX. Single-shot calls, no autonomous looping, no cloud dependency. You run the commands, the model advises.
+Cloud-first agent tools (OpenCode, Goose — great products) assume a fast, reliable API. Local models are different. They're slower, occasionally flaky, and don't need an autonomous loop running on top of them. lomsh is built for that reality.
+
+**What makes it stable for local models:**
+- Single-shot calls only — one request, one response, done. No looping, no sub-agents, nothing running in the background
+- No timeouts — local models can be slow; lomsh waits
+- Full output — responses up to 40k tokens by default, configurable up to your model's full context window
+- No cloud dependency — works entirely offline once your model is running
+
+You stay in a real shell running real commands. The model is one keystroke away when you need it.
 
 ```
 ~/projects/myapp $ ls
