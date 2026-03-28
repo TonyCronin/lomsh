@@ -1,3 +1,8 @@
+---
+title: Colours
+nav_order: 4
+---
+
 # Colours
 
 lomsh uses a fixed true-colour ANSI palette. All colours are defined in `lomsh/colours.py` and applied consistently across the interface.

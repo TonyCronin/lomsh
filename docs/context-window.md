@@ -1,3 +1,8 @@
+---
+title: Context Window
+nav_order: 3
+---
+
 # Context Window
 
 ## What is the context window?

@@ -1,0 +1,27 @@
+title: lomsh
+description: Local Model Shell — a shell harness built for local AI models
+url: "https://tonycronin.github.io/lomsh"
+
+remote_theme: just-the-docs/just-the-docs
+
+color_scheme: dark
+
+# Navigation order
+nav_order: by_filename
+
+# Footer
+footer_content: "lomsh is open source. <a href='https://github.com/TonyCronin/lomsh'>GitHub</a>"
+
+# Aux links (top right)
+aux_links:
+  "GitHub":
+    - "https://github.com/TonyCronin/lomsh"
+
+aux_links_new_tab: true
+
+# Back to top
+back_to_top: true
+back_to_top_text: "Back to top"
+
+plugins:
+  - jekyll-remote-theme

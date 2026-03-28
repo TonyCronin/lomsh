@@ -1,3 +1,8 @@
+---
+title: Model Setup
+nav_order: 2
+---
+
 # Model Setup
 
 lomsh needs a local model to talk to. Pick the path that matches your setup.
