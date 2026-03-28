@@ -1,7 +1,12 @@
 """Main REPL entry point."""
 
 import os
-import readline  # noqa: F401 — patches input() for arrow keys / history
+import readline
+import rlcompleter
+
+# Tab completion — paths and python names
+readline.set_completer_delims(' \t\n;')
+readline.parse_and_bind("tab: complete")
 
 from . import __version__
 from .colours import prompt_style, output_style, error_style, stats_style, dim, bold
