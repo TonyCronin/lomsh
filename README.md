@@ -7,7 +7,7 @@ Running a local model is a different experience — slower responses, occasional
 **Built for local:**
 - Single-shot calls only — one request, one response, done. No looping, no sub-agents, nothing running in the background
 - No timeouts — local models can be slow; lomsh waits
-- Full output — responses up to 40k tokens by default, configurable up to your model's full context window
+- Full output — the complete model response streams to your terminal, nothing truncated
 - Works entirely offline once your model is running
 
 You stay in a real shell running real commands. The model is one keystroke away when you need it.
@@ -99,8 +99,7 @@ lomsh sends your full session as context on every call. How to configure it for 
 | `LOMSH_BASE_URL` | `http://100.91.143.63:4000/v1` | OpenAI-compatible API endpoint |
 | `LOMSH_MODEL` | `Qwen Coder` | Model name |
 | `LOMSH_API_KEY` | `sk-sovereign-local` | API key (ignored by most local servers) |
-| `LOMSH_MAX_CTX` | `100000` | Max tokens sent as context |
-| `LOMSH_MAX_RESPONSE` | `40000` | Max tokens in model response |
+| `LOMSH_MAX_CTX` | `100000` | Max tokens of session history sent to the model |
 
 ## Colours
 

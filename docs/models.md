@@ -88,5 +88,4 @@ See the [LiteLLM docs](https://docs.litellm.ai) for proxying remote GPU servers.
 | `LOMSH_BASE_URL` | `http://100.91.143.63:4000/v1` | OpenAI-compatible API endpoint |
 | `LOMSH_MODEL` | `Qwen Coder` | Model name |
 | `LOMSH_API_KEY` | `sk-sovereign-local` | API key (ignored by most local servers) |
-| `LOMSH_MAX_CTX` | `100000` | Max tokens sent as context |
-| `LOMSH_MAX_RESPONSE` | `40000` | Max tokens in model response |
+| `LOMSH_MAX_CTX` | `100000` | Max tokens of session history sent to the model |
