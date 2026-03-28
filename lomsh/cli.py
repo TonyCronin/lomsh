@@ -9,7 +9,7 @@ readline.set_completer_delims(' \t\n;')
 readline.parse_and_bind("tab: complete")
 
 from . import __version__
-from .colours import prompt_style, output_style, error_style, stats_style, agent_style, dim, bold
+from .colours import prompt_style, output_style, error_style, stats_style, agent_style, dim, bold, C_PROMPT, C_AGENT, RESET
 from .shell   import Session, run_command
 from .stats   import load_alltime, save_alltime
 from .agent   import call_agent
@@ -40,20 +40,37 @@ def make_prompt(session: Session) -> str:
     return f"{prompt_style(cwd)} $ "
 
 
-LOGO = r"""
-█       ███   █   █  ████  █   █
-█      █   █  ██ ██  █     █   █
-█      █   █  █ █ █   ███  █████
-█      █   █  █   █     █  █   █
-█████   ███   █   █  ████  █   █
-""".strip("\n")
+# LOM and SH split across two colour columns
+# Orange (#fb8500) for LOM, Teal (#219ebc) for SH
+_LOM = [
+    "█      ████   █   █",
+    "█      █  █   █████",
+    "█      █  █   █   █",
+    "████   ████   █   █",
+]
+_SH = [
+    "   ████   █   █",
+    "   █      █   █",
+    "    ███   █████",
+    "   ████   █   █",
+]
+
+
+def _print_logo():
+    print()   # top padding
+    print()
+    for lom, sh in zip(_LOM, _SH):
+        print(f"  {C_PROMPT}{lom}{RESET}{C_AGENT}{sh}{RESET}")
+    print()
+    # subtitle — colours match letter groupings
+    print(f"  {C_PROMPT}LOcal Model {RESET}{C_AGENT}Shell{RESET}")
+    print()
 
 
 def main():
     session = Session()
 
-    print(agent_style(LOGO))
-    print()
+    _print_logo()
     print(dim(f"  v{__version__}  model={MODEL}  endpoint={BASE_URL}"))
     print(dim("  :help for commands  |  > to talk to the assistant"))
     print()
