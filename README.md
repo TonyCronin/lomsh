@@ -17,7 +17,12 @@ Looks like the package isn't installed in editable mode...
 
 ## Install
 
-**With pipx (recommended — isolated, available everywhere):**
+**With uv (recommended):**
+```bash
+uv tool install git+https://github.com/TonyCronin/lomsh.git
+```
+
+**With pipx:**
 ```bash
 pipx install git+https://github.com/TonyCronin/lomsh.git
 ```
