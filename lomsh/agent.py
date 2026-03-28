@@ -1,5 +1,6 @@
 """Agent call — single-shot, streaming, no looping."""
 
+import re
 import select
 import sys
 import termios
@@ -197,4 +198,22 @@ def call_agent(user_msg: str, session: Session) -> str:
     print(agent_style("─" * 60))
     print(stats_style(stats))
 
-    return "".join(streamed)
+    full_response = "".join(streamed)
+
+    # If there's exactly one shell code block, offer to run it
+    shell_blocks = re.findall(r"```(?:bash|sh|zsh|shell)\n(.*?)```", full_response, re.DOTALL)
+    if len(shell_blocks) == 1:
+        cmd = shell_blocks[0].strip()
+        try:
+            answer = input(dim("  run this? [y/N] ")).strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            answer = ""
+        if answer == "y":
+            import subprocess
+            result = subprocess.run(cmd, shell=True, text=True, capture_output=True)
+            if result.stdout:
+                sys.stdout.write(result.stdout)
+            if result.stderr:
+                sys.stdout.write(error_style(result.stderr))
+
+    return full_response
