@@ -1,0 +1,92 @@
+// lomsh palette
+// #fb8500 — Orange      — primary / LOM
+// #219ebc — Teal        — secondary / SH
+// #023047 — Midnight Navy — background
+// #8ecae6 — Sky Blue    — accents
+// #ee6c4d — Burnt Orange — highlights
+
+// ── background & base ────────────────────────────────────────────────────────
+
+body { background-color: #023047; color: #e0fbfc; }
+
+.site-nav, .side-bar { background-color: #012030; }
+
+.main-content-wrap { background-color: #023047; }
+
+// ── typography ────────────────────────────────────────────────────────────────
+
+h1, h2, h3, h4 { color: #8ecae6; }
+
+a { color: #fb8500; }
+a:hover { color: #219ebc; }
+
+p, li { color: #e0fbfc; }
+
+// ── nav sidebar ──────────────────────────────────────────────────────────────
+
+.nav-list-item a {
+  color: #8ecae6;
+  &:hover { color: #fb8500; }
+}
+
+.nav-list-item.active > .nav-list-link {
+  color: #fb8500;
+  font-weight: bold;
+}
+
+.site-title {
+  color: #fb8500 !important;
+  font-weight: bold;
+}
+
+// ── code blocks ──────────────────────────────────────────────────────────────
+
+code { background-color: #012030; color: #8ecae6; }
+
+div.highlighter-rouge, figure.highlight {
+  background-color: #012030;
+  border: 1px solid #219ebc22;
+  border-radius: 4px;
+}
+
+pre.highlight { background-color: #012030; }
+
+// ── tables ───────────────────────────────────────────────────────────────────
+
+table th { background-color: #219ebc; color: #023047; }
+table td { border-color: #219ebc44; color: #e0fbfc; }
+table tr:nth-child(even) { background-color: #012030; }
+
+// ── logo block ───────────────────────────────────────────────────────────────
+
+.lomsh-logo {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 2rem 0 0.5rem 0;
+  white-space: pre;
+
+  .lom { color: #fb8500; }
+  .sh  { color: #219ebc; }
+}
+
+.lomsh-subtitle {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+
+  .lom { color: #fb8500; }
+  .sh  { color: #219ebc; }
+}
+
+// ── search ───────────────────────────────────────────────────────────────────
+
+.search-input { background-color: #012030; color: #e0fbfc; border-color: #219ebc44; }
+
+// ── footer ───────────────────────────────────────────────────────────────────
+
+.site-footer { color: #8ecae688; border-color: #219ebc22; }
+.site-footer a { color: #8ecae6; }

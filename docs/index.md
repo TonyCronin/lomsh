@@ -3,6 +3,13 @@ title: Home
 nav_order: 1
 ---
 
+<pre class="lomsh-logo"><span class="lom">█      █████  ██ ██</span><span class="sh">  ████   █   █</span>
+<span class="lom">█      █   █  █ █ █</span><span class="sh">  █      █   █</span>
+<span class="lom">█      █   █  █   █</span><span class="sh">   ███   █████</span>
+<span class="lom">█████  █████  █   █</span><span class="sh">  ████   █   █</span></pre>
+
+<p class="lomsh-subtitle"><span class="lom">LOcal Model </span><span class="sh">Shell</span></p>
+
 # lomsh — Local Model Shell
 
 A shell harness built specifically for local models.
