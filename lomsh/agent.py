@@ -196,7 +196,7 @@ def call_agent(user_msg: str, session: Session) -> str:
         f"All time: {alltime_total:,}"
     )
     print(agent_style("─" * 60))
-    print(stats_style(stats))
+    print(bold("  Tokens:") + stats_style(stats))
 
     full_response = "".join(streamed)
 
