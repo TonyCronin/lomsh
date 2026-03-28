@@ -1,10 +1,8 @@
 # lomsh — Local Model Shell
 
-Most AI coding tools are built for the cloud. Fast APIs, reliable uptime, autonomous agents that loop until the job is done. That works great until you're running your own hardware.
+A simple shell harness for local models. Not a replacement for OpenCode or Goose — those are great tools. This is something smaller: a real bash REPL where a locally-hosted model is one keystroke away.
 
-lomsh is built for local models. Single-shot calls, no autonomous looping, no background agents, no cloud dependency. You stay in a real shell running real commands — a local model specialist is one keystroke away when you need it.
-
-Point it at any OpenAI-compatible endpoint: vLLM, LiteLLM, Ollama, or a LiteLLM proxy in front of your DGX. If the model is slow or the call fails, you're still in your shell. Nothing hangs, nothing retries silently, nothing surprises you.
+Point it at any OpenAI-compatible endpoint — vLLM, LiteLLM, Ollama, a LiteLLM proxy in front of a DGX. Single-shot calls, no autonomous looping, no cloud dependency. You run the commands, the model advises.
 
 ```
 ~/projects/myapp $ ls
