@@ -9,6 +9,7 @@ from openai import OpenAI
 
 from .colours import agent_style, error_style, stats_style, dim
 from .shell import Session
+from .stats import load_alltime
 
 BASE_URL = None   # set from config at runtime
 MODEL    = None
@@ -149,10 +150,13 @@ def call_agent(user_msg: str, session: Session) -> str:
     print()
     session.total_in  += usage_in
     session.total_out += usage_out
+    at_in, at_out = load_alltime()
+    alltime_total = at_in + at_out + session.total_in + session.total_out
     stats = (
         f"  ↑ {usage_in:,} in  "
         f"↓ {usage_out:,} out  "
-        f"Total: {session.total_in + session.total_out:,}"
+        f"Session: {session.total_in + session.total_out:,}  "
+        f"All time: {alltime_total:,}"
     )
     print(agent_style("─" * 60))
     print(stats_style(stats))
