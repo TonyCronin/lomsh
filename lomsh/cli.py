@@ -40,11 +40,22 @@ def make_prompt(session: Session) -> str:
     return f"{prompt_style(cwd)} $ "
 
 
+LOGO = r"""
+█       ███   █   █  ████  █   █
+█      █   █  ██ ██  █     █   █
+█      █   █  █ █ █   ███  █████
+█      █   █  █   █     █  █   █
+█████   ███   █   █  ████  █   █
+""".strip("\n")
+
+
 def main():
     session = Session()
 
-    print(prompt_style(bold("lomsh")) + f" v{__version__}" + dim(f"  model={MODEL}  endpoint={BASE_URL}"))
-    print(dim("type :help for commands, > to talk to the assistant"))
+    print(agent_style(LOGO))
+    print()
+    print(dim(f"  v{__version__}  model={MODEL}  endpoint={BASE_URL}"))
+    print(dim("  :help for commands  |  > to talk to the assistant"))
     print()
 
     while True:
