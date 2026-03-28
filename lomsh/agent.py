@@ -1,9 +1,12 @@
 """Agent call — single-shot, streaming, no looping."""
 
+import select
 import sys
+import termios
 import textwrap
 import threading
 import time
+import tty
 
 from openai import OpenAI
 
@@ -42,6 +45,26 @@ class Spinner:
         self._thread.join()
         sys.stdout.write("\r\033[K")
         sys.stdout.flush()
+
+
+def _watch_for_escape(stop_event: threading.Event) -> None:
+    """
+    Watch stdin for Escape or Ctrl+C in raw mode.
+    Sets stop_event when either is detected.
+    Restores terminal state on exit.
+    """
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setcbreak(fd)
+        while not stop_event.is_set():
+            if select.select([sys.stdin], [], [], 0.05)[0]:
+                ch = sys.stdin.read(1)
+                if ch in ("\x1b", "\x03"):   # Escape or Ctrl+C
+                    stop_event.set()
+                    break
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 
 def _process_stream(stream) -> tuple[str, int, int]:
@@ -94,10 +117,16 @@ def call_agent(user_msg: str, session: Session) -> str:
         {"role": "user",   "content": user_msg},
     ]
 
-    spinner   = Spinner()
+    stop_event  = threading.Event()
+    watcher     = threading.Thread(target=_watch_for_escape, args=(stop_event,), daemon=True)
+    spinner     = Spinner()
     spinner.start()
+    watcher.start()
+
     first_token = True
     streamed    = []
+    interrupted = False
+    usage_in = usage_out = 0
 
     try:
         stream = client.chat.completions.create(
@@ -108,9 +137,11 @@ def call_agent(user_msg: str, session: Session) -> str:
             max_tokens=None,
         )
 
-        usage_in = usage_out = 0
-
         for chunk in stream:
+            if stop_event.is_set():
+                interrupted = True
+                break
+
             if hasattr(chunk, "usage") and chunk.usage is not None:
                 usage_in  = chunk.usage.prompt_tokens
                 usage_out = chunk.usage.completion_tokens
@@ -133,19 +164,24 @@ def call_agent(user_msg: str, session: Session) -> str:
             sys.stdout.flush()
 
     except KeyboardInterrupt:
-        if first_token:
-            spinner.stop()
-        print()
-        print(agent_style("─" * 60))
-        print(dim("  (interrupted)"))
+        interrupted = True
 
     except Exception as e:
+        stop_event.set()
         spinner.stop()
         print(error_style(f"\n[lomsh] model error: {e}"))
         return ""
 
+    finally:
+        stop_event.set()   # unblock the watcher thread
+
     if first_token:
         spinner.stop()
+
+    if interrupted:
+        print()
+        print(agent_style("─" * 60))
+        print(dim("  (interrupted)"))
 
     print()
     session.total_in  += usage_in
