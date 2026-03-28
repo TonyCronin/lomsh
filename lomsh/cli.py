@@ -9,7 +9,7 @@ readline.set_completer_delims(' \t\n;')
 readline.parse_and_bind("tab: complete")
 
 from . import __version__
-from .colours import prompt_style, output_style, error_style, stats_style, dim, bold
+from .colours import prompt_style, output_style, error_style, stats_style, agent_style, dim, bold
 from .shell   import Session, run_command
 from .stats   import load_alltime, save_alltime
 from .agent   import call_agent
