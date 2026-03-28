@@ -43,16 +43,16 @@ def make_prompt(session: Session) -> str:
 # LOM and SH split across two colour columns
 # Orange (#fb8500) for LOM, Teal (#219ebc) for SH
 _LOM = [
-    "█      ████   █   █",
-    "█      █  █   █████",
-    "█      █  █   █   █",
-    "████   ████   █   █",
+    "█      █████  ██ ██",
+    "█      █   █  █ █ █",
+    "█      █   █  █   █",
+    "█████  █████  █   █",
 ]
 _SH = [
-    "   ████   █   █",
-    "   █      █   █",
-    "    ███   █████",
-    "   ████   █   █",
+    "  ████   █   █",
+    "  █      █   █",
+    "   ███   █████",
+    "  ████   █   █",
 ]
 
 
