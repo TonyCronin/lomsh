@@ -1,6 +1,10 @@
-# lomsh
+# lomsh — Local Model Shell
 
-A smart shell. Real bash commands, with an AI DevOps specialist one keystroke away.
+Most AI coding tools are built for the cloud. Fast APIs, reliable uptime, autonomous agents that loop until the job is done. That works great until you're running your own hardware.
+
+lomsh is built for local models. Single-shot calls, no autonomous looping, no background agents, no cloud dependency. You stay in a real shell running real commands — a local model specialist is one keystroke away when you need it.
+
+Point it at any OpenAI-compatible endpoint: vLLM, LiteLLM, Ollama, or a LiteLLM proxy in front of your DGX. If the model is slow or the call fails, you're still in your shell. Nothing hangs, nothing retries silently, nothing surprises you.
 
 ```
 ~/projects/myapp $ ls
@@ -79,7 +83,7 @@ Set via environment variables:
 | `LOMSH_API_KEY` | `sk-sovereign-local` | API key (ignored by most local servers) |
 | `LOMSH_MAX_CTX` | `100000` | Max tokens sent as context |
 
-Any OpenAI-compatible endpoint works — vLLM, LiteLLM, Ollama, OpenAI itself.
+Any OpenAI-compatible endpoint works — vLLM, LiteLLM, Ollama, a LiteLLM proxy in front of your DGX.
 
 ## Development
 
