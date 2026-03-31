@@ -14,24 +14,28 @@ Developers and DevOps engineers who live in the terminal. People who think in sh
 
 Primary development machine: DGX Spark (GX10). Local models served via LiteLLM proxy at `http://100.91.143.63:4000/v1`. Default model: Qwen 80B Coder. 128k context window.
 
-## Current state (v0.1.0)
+## Current state (v0.1.1)
 
 Working MVP:
 - Real shell REPL with persistent cwd tracking
 - `> message` agent invocation
 - Streaming response with braille spinner
-- Per-call and session token counters
+- Per-call and session token counters (session total, in/out, all-time)
 - Persistent all-time token stats (`~/.lomsh_stats.json`)
 - Custom colour palette (orange prompt, teal agent, midnight navy agent bg, sky blue stats, burnt orange errors)
-- readline support (arrow keys, history)
-- installable as `lomsh` command via pipx/pip
+- readline support (arrow keys, history, tab completion — macOS libedit and Linux GNU readline both handled)
+- If response contains exactly one shell code block, offers to run it
+- Pixel art block logo in terminal banner and docs sidebar
+- Installable as `lomsh` command via uv, pipx, or pip
+- macOS primary platform, Linux supported
 
-## What's next (v2 candidates)
+## What's next
 
 - Agent tools: `run_command` (agent can execute) and file read/write with diff display
 - Context compression when approaching 128k
 - Named model profiles in config
 - `--live` integration test flag
+- Version bump to `0.1.1`
 
 ## Key files
 
