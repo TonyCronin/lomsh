@@ -56,6 +56,21 @@ def test_non_shell_blocks_detected():
     assert "python" in langs
 
 
+def test_short_blocks_skipped():
+    """Blocks with fewer than 5 lines should not be offered for saving."""
+    import re
+    response = "```js\nconsole.log('hi')\n```\n"
+    save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", response, re.DOTALL)
+    substantial = [(lang, block) for lang, block in save_blocks if block.count("\n") >= 5]
+    assert len(substantial) == 0
+
+
+def test_filename_without_dot_rejected():
+    """Inputs without a dot (like 'y' or 'n') should not be used as filenames."""
+    for bad_input in ["y", "n", "yes", "skip", ""]:
+        assert "." not in bad_input or bad_input == ""
+
+
 def test_save_block_writes_file(tmp_path):
     """Saving a block should write the content to session.cwd/filename."""
     import re

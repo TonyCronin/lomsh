@@ -220,17 +220,20 @@ def call_agent(user_msg: str, session: Session) -> str:
                 sys.stdout.write(error_style(result.stderr))
             session.add_cmd(cmd, result.stdout, result.stderr, result.returncode)
 
-    # Offer to save non-shell code blocks to a file
+    # Offer to save non-shell code blocks to a file — only substantial blocks (>5 lines)
     save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", full_response, re.DOTALL)
     for lang, block in save_blocks:
+        if block.count("\n") < 5:
+            continue
         try:
-            filename = input(dim(f"  save {lang} block as [leave blank to skip]: ")).strip()
+            filename = input(dim(f"  save {lang} block as filename (blank to skip): ")).strip()
         except (EOFError, KeyboardInterrupt):
             break
-        if filename:
-            filepath = os.path.join(session.cwd, filename)
-            with open(filepath, "w") as f:
-                f.write(block)
-            print(dim(f"  saved to {filepath}"))
+        if not filename or "." not in filename:
+            continue
+        filepath = os.path.join(session.cwd, filename)
+        with open(filepath, "w") as f:
+            f.write(block)
+        print(dim(f"  saved to {filepath}"))
 
     return full_response
