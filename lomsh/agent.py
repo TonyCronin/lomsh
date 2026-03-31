@@ -211,7 +211,7 @@ def call_agent(user_msg: str, session: Session) -> str:
             answer = ""
         if answer == "y":
             import subprocess
-            result = subprocess.run(cmd, shell=True, text=True, capture_output=True)
+            result = subprocess.run(cmd, shell=True, text=True, capture_output=True, cwd=session.cwd)
             if result.stdout:
                 sys.stdout.write(result.stdout)
             if result.stderr:
