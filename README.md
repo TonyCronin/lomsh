@@ -120,7 +120,8 @@ lomsh stands on the shoulders of:
 
 - [openai-python](https://github.com/openai/openai-python) - streaming SDK that handles the model connection
 - [readline](https://tiswww.case.edu/php/chet/readline/rltop.html) / [libedit](https://thrysoee.dk/editline/) - the line editing, history, and tab completion that make the REPL feel like a real shell
-- [Ollama](https://github.com/ollama/ollama), [LiteLLM](https://github.com/BerriAI/litellm), [vLLM](https://github.com/vllm-project/vllm) - the model serving layer lomsh is built for
+
+Works great with [Ollama](https://github.com/ollama/ollama), [LiteLLM](https://github.com/BerriAI/litellm), and [vLLM](https://github.com/vllm-project/vllm) as the model backend.
 
 ## Architecture
 
