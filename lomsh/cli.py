@@ -4,17 +4,6 @@ import os
 import glob
 import readline
 
-
-def _path_completer(text, state):
-    matches = glob.glob(os.path.expanduser(text) + "*")
-    matches = [m + "/" if os.path.isdir(m) else m for m in matches]
-    try:
-        return matches[state]
-    except IndexError:
-        return None
-
-
-readline.set_completer(_path_completer)
 readline.set_completer_delims(' \t\n;')
 if readline.__doc__ and 'libedit' in readline.__doc__:
     readline.parse_and_bind("bind ^I rl_complete")
@@ -82,6 +71,25 @@ def _print_logo():
 
 def main():
     session = Session()
+
+    def _path_completer(text, state):
+        if os.path.isabs(text) or text.startswith("~"):
+            pattern = os.path.expanduser(text) + "*"
+            base = None
+        else:
+            pattern = os.path.join(session.cwd, text) + "*"
+            base = session.cwd
+        matches = glob.glob(pattern)
+        results = []
+        for m in matches:
+            rel = os.path.relpath(m, base) if base else m
+            results.append(rel + "/" if os.path.isdir(m) else rel)
+        try:
+            return results[state]
+        except IndexError:
+            return None
+
+    readline.set_completer(_path_completer)
 
     _print_logo()
     print(dim(f"  v{__version__}  model={MODEL}  endpoint={BASE_URL}"))
