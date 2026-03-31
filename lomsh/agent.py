@@ -201,14 +201,15 @@ def call_agent(user_msg: str, session: Session) -> str:
 
     full_response = "".join(streamed)
 
-    # If there's exactly one shell code block, offer to run it
+    # Offer to run each shell code block in sequence
     shell_blocks = re.findall(r"```(?:bash|sh|zsh|shell)\n(.*?)```", full_response, re.DOTALL)
-    if len(shell_blocks) == 1:
-        cmd = shell_blocks[0].strip()
+    for i, block in enumerate(shell_blocks):
+        cmd = block.strip()
+        label = f"  run block {i + 1}/{len(shell_blocks)}? [y/N] " if len(shell_blocks) > 1 else "  run this? [y/N] "
         try:
-            answer = input(dim("  run this? [y/N] ")).strip().lower()
+            answer = input(dim(label)).strip().lower()
         except (EOFError, KeyboardInterrupt):
-            answer = ""
+            break
         if answer == "y":
             import subprocess
             result = subprocess.run(cmd, shell=True, text=True, capture_output=True, cwd=session.cwd)
