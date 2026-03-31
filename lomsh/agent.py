@@ -1,5 +1,6 @@
 """Agent call — single-shot, streaming, no looping."""
 
+import os
 import re
 import select
 import sys
@@ -217,5 +218,18 @@ def call_agent(user_msg: str, session: Session) -> str:
                 sys.stdout.write(result.stdout)
             if result.stderr:
                 sys.stdout.write(error_style(result.stderr))
+
+    # Offer to save non-shell code blocks to a file
+    save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", full_response, re.DOTALL)
+    for lang, block in save_blocks:
+        try:
+            filename = input(dim(f"  save {lang} block as [leave blank to skip]: ")).strip()
+        except (EOFError, KeyboardInterrupt):
+            break
+        if filename:
+            filepath = os.path.join(session.cwd, filename)
+            with open(filepath, "w") as f:
+                f.write(block)
+            print(dim(f"  saved to {filepath}"))
 
     return full_response

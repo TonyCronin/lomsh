@@ -1,8 +1,8 @@
 """Tests for shell block detection and execution behaviour in call_agent."""
 
+import os
 import subprocess
 import pytest
-from unittest.mock import patch, MagicMock
 from lomsh.shell import Session
 
 
@@ -41,6 +41,61 @@ def test_non_shell_blocks_ignored():
     response = "```html\n<h1>hi</h1>\n```\n```python\nprint('hi')\n```\n"
     shell_blocks = re.findall(r"```(?:bash|sh|zsh|shell)\n(.*?)```", response, re.DOTALL)
     assert len(shell_blocks) == 0
+
+
+# ── save non-shell blocks ─────────────────────────────────────────────────────
+
+def test_non_shell_blocks_detected():
+    """HTML, python, js etc blocks should be found for saving."""
+    import re
+    response = "```html\n<h1>hi</h1>\n```\n```python\nprint('hi')\n```\n"
+    save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", response, re.DOTALL)
+    assert len(save_blocks) == 2
+    langs = [lang for lang, _ in save_blocks]
+    assert "html" in langs
+    assert "python" in langs
+
+
+def test_save_block_writes_file(tmp_path):
+    """Saving a block should write the content to session.cwd/filename."""
+    import re
+
+    response = "```html\n<h1>Hello</h1>\n```\n"
+    save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", response, re.DOTALL)
+    assert len(save_blocks) == 1
+
+    lang, content = save_blocks[0]
+    filename = "index.html"
+    filepath = os.path.join(str(tmp_path), filename)
+    with open(filepath, "w") as f:
+        f.write(content)
+
+    assert (tmp_path / "index.html").exists()
+    assert "<h1>Hello</h1>" in (tmp_path / "index.html").read_text()
+
+
+def test_save_block_uses_session_cwd(tmp_path):
+    """File should land in session.cwd, not process cwd."""
+    s = Session()
+    s.cwd = str(tmp_path)
+
+    content = "<html><body>game</body></html>\n"
+    filepath = os.path.join(s.cwd, "game.html")
+    with open(filepath, "w") as f:
+        f.write(content)
+
+    assert (tmp_path / "game.html").exists()
+    assert "game" in (tmp_path / "game.html").read_text()
+
+
+def test_shell_block_not_in_save_blocks():
+    """bash blocks should not appear in the save-block list."""
+    import re
+    response = "```bash\necho hi\n```\n```html\n<h1>hi</h1>\n```\n"
+    save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", response, re.DOTALL)
+    langs = [lang for lang, _ in save_blocks]
+    assert "bash" not in langs
+    assert "html" in langs
 
 
 # ── execution uses session.cwd ────────────────────────────────────────────────
