@@ -1,9 +1,20 @@
 """Main REPL entry point."""
 
 import os
+import glob
 import readline
 
-# Tab completion — filesystem paths
+
+def _path_completer(text, state):
+    matches = glob.glob(os.path.expanduser(text) + "*")
+    matches = [m + "/" if os.path.isdir(m) else m for m in matches]
+    try:
+        return matches[state]
+    except IndexError:
+        return None
+
+
+readline.set_completer(_path_completer)
 readline.set_completer_delims(' \t\n;')
 if readline.__doc__ and 'libedit' in readline.__doc__:
     readline.parse_and_bind("bind ^I rl_complete")
