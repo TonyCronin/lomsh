@@ -12,7 +12,7 @@ import tty
 
 from openai import OpenAI
 
-from .colours import agent_style, error_style, stats_style, dim, bold
+from .colours import agent_style, output_style, error_style, stats_style, dim, bold
 from .shell import Session
 from .stats import load_alltime
 
@@ -215,7 +215,7 @@ def call_agent(user_msg: str, session: Session) -> str:
             import subprocess
             result = subprocess.run(cmd, shell=True, text=True, capture_output=True, cwd=session.cwd)
             if result.stdout:
-                sys.stdout.write(result.stdout)
+                sys.stdout.write(output_style(result.stdout))
             if result.stderr:
                 sys.stdout.write(error_style(result.stderr))
             session.add_cmd(cmd, result.stdout, result.stderr, result.returncode)
