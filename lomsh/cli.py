@@ -6,7 +6,10 @@ import rlcompleter
 
 # Tab completion — paths and python names
 readline.set_completer_delims(' \t\n;')
-readline.parse_and_bind("tab: complete")
+if 'libedit' in readline.__doc__ or 'libedit' in getattr(readline, '__doc__', ''):
+    readline.parse_and_bind("bind ^I rl_complete")
+else:
+    readline.parse_and_bind("tab: complete")
 
 from . import __version__
 from .colours import prompt_style, output_style, error_style, stats_style, agent_style, dim, bold, C_PROMPT, C_AGENT, RESET

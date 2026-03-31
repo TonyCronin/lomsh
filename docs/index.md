@@ -47,7 +47,7 @@ src/  tests/  pyproject.toml
 ────────────────────────────────────────────────────────────
 Looks like the package isn't installed in editable mode...
 ────────────────────────────────────────────────────────────
-  ↑ 412 in  ↓ 183 out  Total: 595
+  Tokens:  595  ↓ 412 in  ↑ 183 out  All time: 5,227
 ```
 
 ---

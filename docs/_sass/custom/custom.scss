@@ -66,6 +66,26 @@ table th { background-color: #219ebc; color: #023047; }
 table td { border-color: #219ebc44; color: #e0fbfc; }
 table tr:nth-child(even) { background-color: #012030; }
 
+// ── sidebar logo ─────────────────────────────────────────────────────────────
+
+.site-title {
+  display: block;
+  padding: 1rem 0 0.5rem 0;
+}
+
+pre.sidebar-logo {
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-size: 0.45rem;
+  line-height: 1.3;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  white-space: pre;
+  .lom { color: #fb8500; }
+  .sh  { color: #219ebc; }
+}
+
 // ── logo block ───────────────────────────────────────────────────────────────
 
 .lomsh-logo {

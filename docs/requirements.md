@@ -44,6 +44,7 @@ Shell-first. The user is in a real shell. The AI is a guest, not the host.
 - NFR-04: Configurable entirely via environment variables
 - NFR-05: Arrow keys and command history work in the REPL (readline)
 - NFR-06: True-color ANSI palette — no dependency on terminal theme
+- NFR-07: macOS is the primary supported platform; Linux is also supported. Tab completion must work on both (macOS uses libedit, Linux uses GNU readline — detect and bind accordingly).
 
 ## Testing requirements
 
