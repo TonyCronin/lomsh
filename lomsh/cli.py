@@ -4,11 +4,18 @@ import os
 import glob
 import readline
 
+HISTORY_FILE = os.path.expanduser("~/.lomsh_history")
+
 readline.set_completer_delims(' \t\n;')
 if readline.__doc__ and 'libedit' in readline.__doc__:
     readline.parse_and_bind("bind ^I rl_complete")
 else:
     readline.parse_and_bind("tab: complete")
+
+try:
+    readline.read_history_file(HISTORY_FILE)
+except FileNotFoundError:
+    pass
 
 from . import __version__
 from .colours import prompt_style, output_style, error_style, stats_style, agent_style, dim, bold, C_PROMPT, C_AGENT, RESET
@@ -102,6 +109,7 @@ def main():
         except (EOFError, KeyboardInterrupt):
             print()
             save_alltime(session.total_in, session.total_out)
+            readline.write_history_file(HISTORY_FILE)
             break
 
         line = line.strip()
@@ -112,6 +120,7 @@ def main():
 
         if line in ("exit", "quit"):
             save_alltime(session.total_in, session.total_out)
+            readline.write_history_file(HISTORY_FILE)
             break
 
         if line == ":help":
