@@ -11,7 +11,7 @@ import tty
 
 from openai import OpenAI
 
-from .colours import agent_style, error_style, stats_style, dim
+from .colours import agent_style, error_style, stats_style, dim, bold
 from .shell import Session
 from .stats import load_alltime
 
