@@ -1,6 +1,7 @@
 """Main REPL entry point."""
 
 import os
+import re
 import glob
 import readline
 
@@ -46,7 +47,10 @@ Everything else is passed to your shell.
 def make_prompt(session: Session) -> str:
     home = os.path.expanduser("~")
     cwd  = session.cwd.replace(home, "~")
-    return f"{prompt_style(cwd)} $ "
+    # Wrap each ANSI escape in \001/\002 so readline correctly measures prompt
+    # width. Without this, history recall and line editing garble the display.
+    styled = re.sub(r"(\033\[[^m]*m)", r"\001\1\002", prompt_style(cwd))
+    return f"{styled} $ "
 
 
 # LOM and SH split across two colour columns

@@ -8,6 +8,44 @@ from lomsh.shell import Session
 
 # ── path completer ────────────────────────────────────────────────────────────
 
+import re as _re
+
+
+# ── prompt width ──────────────────────────────────────────────────────────────
+
+def test_prompt_ansi_wrapped_for_readline(tmp_path):
+    """Every ANSI escape in the prompt must be wrapped in \\001/\\002."""
+    from lomsh.shell import Session
+    from lomsh.cli import make_prompt
+
+    s = Session()
+    s.cwd = str(tmp_path)
+    prompt = make_prompt(s)
+
+    # Find all ANSI escapes — each must be preceded by \001 and followed by \002
+    escapes = list(_re.finditer(r"\033\[[^m]*m", prompt))
+    assert escapes, "prompt should contain at least one ANSI escape"
+    for m in escapes:
+        start = m.start()
+        end   = m.end()
+        assert prompt[start - 1] == "\001", f"escape at {start} not preceded by \\001"
+        assert prompt[end]       == "\002", f"escape at {end} not followed by \\002"
+
+
+def test_prompt_contains_no_bare_escapes(tmp_path):
+    """No ANSI escape should appear outside \\001/\\002 markers."""
+    from lomsh.shell import Session
+    from lomsh.cli import make_prompt
+
+    s = Session()
+    s.cwd = str(tmp_path)
+    prompt = make_prompt(s)
+
+    # Strip wrapped sequences — nothing should remain
+    stripped = _re.sub(r"\001\033\[[^m]*m\002", "", prompt)
+    assert "\033" not in stripped
+
+
 def _make_completer(session):
     """Recreate the _path_completer closure from cli.py for testing."""
     def _path_completer(text, state):
