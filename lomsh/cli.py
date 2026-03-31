@@ -2,11 +2,10 @@
 
 import os
 import readline
-import rlcompleter
 
-# Tab completion — paths and python names
+# Tab completion — filesystem paths
 readline.set_completer_delims(' \t\n;')
-if 'libedit' in readline.__doc__ or 'libedit' in getattr(readline, '__doc__', ''):
+if readline.__doc__ and 'libedit' in readline.__doc__:
     readline.parse_and_bind("bind ^I rl_complete")
 else:
     readline.parse_and_bind("tab: complete")
