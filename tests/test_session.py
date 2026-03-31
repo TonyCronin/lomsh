@@ -97,3 +97,53 @@ def test_run_command_captures_stderr(tmp_path):
     s.cwd = str(tmp_path)
     _, stderr, rc = run_command("ls /no/such/path", s)
     assert rc != 0
+
+
+# ── file content via shell lands in model context ─────────────────────────────
+
+def test_cat_output_appears_in_context(tmp_path):
+    """cat file.py output should be visible to the model via session context."""
+    src = tmp_path / "main.py"
+    src.write_text("def hello():\n    return 'world'\n")
+
+    s = Session()
+    s.cwd = str(tmp_path)
+    stdout, _, rc = run_command(f"cat {src}", s)
+    assert rc == 0
+    s.add_cmd(f"cat {src}", stdout, "", rc)
+
+    ctx = s.build_context()
+    assert "def hello():" in ctx
+    assert "return 'world'" in ctx
+
+
+def test_multiple_files_all_in_context(tmp_path):
+    """cat of multiple files should put all content in context."""
+    (tmp_path / "a.py").write_text("class A: pass\n")
+    (tmp_path / "b.py").write_text("class B: pass\n")
+
+    s = Session()
+    s.cwd = str(tmp_path)
+    stdout, _, rc = run_command(f"cat {tmp_path}/a.py {tmp_path}/b.py", s)
+    assert rc == 0
+    s.add_cmd("cat a.py b.py", stdout, "", rc)
+
+    ctx = s.build_context()
+    assert "class A" in ctx
+    assert "class B" in ctx
+
+
+def test_find_xargs_cat_in_context(tmp_path):
+    """find | xargs cat output should land in context for whole-folder reads."""
+    src = tmp_path / "app.py"
+    src.write_text("# entry point\nimport sys\n")
+
+    s = Session()
+    s.cwd = str(tmp_path)
+    stdout, _, rc = run_command(f"find {tmp_path} -name '*.py' | xargs cat", s)
+    assert rc == 0
+    s.add_cmd("find . -name '*.py' | xargs cat", stdout, "", rc)
+
+    ctx = s.build_context()
+    assert "entry point" in ctx
+    assert "import sys" in ctx
