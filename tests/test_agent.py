@@ -157,6 +157,19 @@ def test_sequential_blocks_user_skips_second(tmp_path):
     assert not (tmp_path / "second.txt").exists()
 
 
+def test_run_block_output_added_to_session(tmp_path):
+    """Output from a run this? block must land in session history."""
+    s = Session()
+    s.cwd = str(tmp_path)
+
+    cmd = "echo context_payload"
+    result = subprocess.run(cmd, shell=True, text=True, capture_output=True, cwd=s.cwd)
+    s.add_cmd(cmd, result.stdout, result.stderr, result.returncode)
+
+    ctx = s.build_context()
+    assert "context_payload" in ctx
+
+
 def test_sequential_blocks_user_runs_both(tmp_path):
     """User answers y for both blocks — both run."""
     import re

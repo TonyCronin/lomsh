@@ -218,6 +218,7 @@ def call_agent(user_msg: str, session: Session) -> str:
                 sys.stdout.write(result.stdout)
             if result.stderr:
                 sys.stdout.write(error_style(result.stderr))
+            session.add_cmd(cmd, result.stdout, result.stderr, result.returncode)
 
     # Offer to save non-shell code blocks to a file
     save_blocks = re.findall(r"```(?!bash|sh|zsh|shell)(\w+)\n(.*?)```", full_response, re.DOTALL)
